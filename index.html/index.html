@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shri Shyam Mandir Jaleu Dham</title>
+
+<style>
+body{
+  font-family: Arial;
+  margin: 0;
+  background: #fff3f3;
+  transition: 0.4s;
+  overflow-x: hidden;
+}
+
+/* 🌙 Dark Mode */
+.dark{
+  background: #121212;
+  color: white;
+}
+
+/* Navbar */
+.navbar{
+  background: #b30000;
+  text-align: center;
+  padding: 10px;
+}
+.navbar a{
+  color: white;
+  margin: 10px;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+/* Banner */
+.banner{
+  background: linear-gradient(to right,#ffd700,#ffcc00,#ff9900);
+  padding: 25px;
+  text-align: center;
+  color: #800000;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.4);
+  border-bottom: 3px solid #b30000;
+}
+.banner h1{
+  font-size: 34px;
+  text-shadow: 2px 2px 6px rgba(0,0,0,0.5);
+}
+
+/* Sections */
+.section{
+  background: rgba(255,255,255,0.9);
+  margin: 15px;
+  padding: 20px;
+  border-radius: 15px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+}
+.dark .section{
+  background: rgba(30,30,30,0.9);
+}
+
+/* Shringar */
+.photo-box{position:relative;text-align:center;}
+.photo-box img{
+  width:90%;max-width:400px;border-radius:10px;
+  cursor:pointer;
+  box-shadow: 0 0 10px #ffd700, 0 0 20px #ffd700, 0 0 30px #ffd700;
+  animation: shimmerGlow 2.5s infinite alternate;
+}
+@keyframes shimmerGlow{
+  0%{ box-shadow: 0 0 5px #ffd700, 0 0 10px #ffd700, 0 0 15px #ffd700; }
+  50%{ box-shadow: 0 0 15px #ffd700, 0 0 25px #ffd700, 0 0 35px #ffd700; }
+  100%{ box-shadow: 0 0 10px #ffd700, 0 0 20px #ffd700, 0 0 30px #ffd700; }
+}
+
+.overlay{
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0,0,0,0.6);
+  color: #ffd700; 
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-weight: bold;
+  text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+}
+
+/* Main caption below photo */
+#main-caption{
+  text-align: center;
+  margin-top: 10px;
+  font-weight: bold;
+  color: #ffd700;
+  text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+}
+
+/* Visitor counter */
+#visitor-counter{
+  text-align:center; 
+  margin-top:15px; 
+  padding:10px 15px; 
+  border-radius:12px; 
+  background: rgba(0,0,0,0.6); 
+  color:#ffd700; 
+  font-weight:bold;
+  font-size:1rem;
+  display:inline-block;
+  text-shadow:1px 1px 3px rgba(0,0,0,0.5);
+}
+
+/* Gallery */
+.gallery{
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px,1fr));
+  gap: 15px;
+}
+.gallery-card{
+  position: relative;
+  overflow: hidden;
+  border-radius: 12px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+  background: rgba(255,255,255,0.9);
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+.dark .gallery-card{
+  background: rgba(30,30,30,0.9);
+}
+.gallery-card:hover{
+  transform: scale(1.05);
+  box-shadow: 0 8px 25px rgba(0,0,0,0.4);
+}
+.gallery-card img{
+  width: 100%;
+  display: block;
+  cursor: pointer;
+  transform: scale(0.8);
+  opacity: 0;
+  transition: transform 0.4s ease, opacity 0.4s ease;
+}
+.gallery-card.show img{
+  transform: scale(1);
+  opacity: 1;
+}
+.gallery-card p{
+  text-align: center;
+  padding: 8px;
+  margin: 0;
+  font-weight: bold;
+  color: #ffd700;
+  text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+}
+
+/* Footer */
+footer{
+  background: #b30000;
+  color: white;
+  text-align: center;
+  padding: 10px;
+}
+
+/* 🌸 Flowers */
+.flower{
+  position: fixed;
+  top: -50px;
+  font-size: 20px;
+  animation: fall linear infinite;
+}
+@keyframes fall{
+  0%{transform: translateY(0); opacity:1;}
+  100%{transform: translateY(100vh); opacity:0;}
+}
+
+/* 🌙 Toggle Button */
+.toggle-btn{
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  background: #000;
+  color: #fff;
+  padding: 8px 12px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+/* Lightbox */
+#lightbox{
+  position: fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background: rgba(0,0,0,0.85);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.4s ease, visibility 0.4s ease;
+  z-index: 9999;
+}
+#lightbox.show{
+  opacity:1;
+  visibility: visible;
+}
+#lightbox img{
+  max-width:90%;
+  max-height:80%;
+  border-radius:10px;
+  transform: scale(0.8);
+  opacity:0;
+  transition: transform 0.4s ease, opacity 0.4s ease;
+}
+#lightbox.show img{
+  transform: scale(1);
+  opacity:1;
+}
+#lightbox p{
+  color: #ffd700;
+  margin-top: 12px;
+  font-size: 1.1rem;
+  text-align: center;
+  text-shadow:1px 1px 3px rgba(0,0,0,0.5);
+}
+
+/* Visitor popup */
+#visitor-popup{
+  position:fixed; top:20px; right:20px; 
+  background: rgba(0,0,0,0.7); 
+  color:#ffd700; 
+  padding:12px 20px; 
+  border-radius:15px; 
+  font-weight:bold; 
+  display:flex; 
+  align-items:center; 
+  gap:10px;
+  font-size:1rem;
+  text-shadow:1px 1px 3px rgba(0,0,0,0.5);
+  opacity:0;
+  transition: opacity 0.5s ease;
+  z-index:9999;
+}
+#visitor-popup.show{
+  opacity:1;
+  animation: bounceGlow 1s ease-in-out infinite;
+}
+@keyframes bounceGlow{
+  0% { transform: translateY(0); filter: drop-shadow(0 0 0 gold); }
+  25% { transform: translateY(-5px); filter: drop-shadow(0 0 5px gold); }
+  50% { transform: translateY(0); filter: drop-shadow(0 0 10px gold); }
+  75% { transform: translateY(-3px); filter: drop-shadow(0 0 5px gold); }
+  100% { transform: translateY(0); filter: drop-shadow(0 0 0 gold); }
+}
+#visitor-popup span{
+  animation: textShimmer 1.5s infinite;
+}
+@keyframes textShimmer{
+  0%{ text-shadow: 0 0 2px gold; }
+  50%{ text-shadow: 0 0 8px gold, 0 0 12px gold; }
+  100%{ text-shadow: 0 0 2px gold; }
+}
+</style>
+</head>
+
+<body>
+
+<!-- 🌙 Toggle Button -->
+<div class="toggle-btn" onclick="toggleMode()">🌙 Night</div>
+
+<!-- 🌸 Flowers -->
+<div id="flowers"></div>
+
+<!-- Navbar -->
+<div class="navbar">
+<a href="#">Home</a>
+<a href="#about">About</a>
+<a href="#gallery">Gallery</a>
+</div>
+
+<!-- Banner -->
+<div class="banner">
+<p>।। ॐ श्री श्याम देवाय नमः ।।</p>
+<h1>श्री श्याम मंदिर जालेऊ धाम</h1>
+<p>हारे का सहारा, बाबा श्याम हमारा</p>
+</div>
+
+<!-- About -->
+<div class="section" id="about">
+<h2>About Mandir</h2>
+
+<p>
+शिला से श्रीविग्रह तकः जोशी परिवार की आस्था की गाथा<br><br>
+
+सन् 1774 की बात है। जोशी परिवार की दादी मां, लिखमां एक अत्यंत धार्मिक और श्रद्धालु महिला थीं। उन्होंने अपने आंगन में पड़े एक साधारण काले पत्थर में श्रीश्याम का दिव्य रूप देखा। उनके हृदय में एक गहरी अनुभूति जागी कि यह कोई साधारण पत्थर नहीं, बल्कि स्वयं श्रीश्याम का प्रतिरूप है। उसी दिन से उन्होंने उस शिला की नियमित पूजा-अर्चना प्रारंभ कर दी।<br><br>
+
+समय बीतता गया। पीढ़ियाँ बदलीं, परंतु जोशी परिवार की आस्था अडिग रही। घर के प्रत्येक सदस्य ने उस शिला को भगवान श्रीश्याम का स्वरूप मानकर पूजा की परंपरा को आगे बढ़ाया। धीरे-धीरे उस पत्थर के प्रति श्रद्धालुओं की भक्ति बढ़ती गई। गाँव के लोग भी इस पत्थर की दिव्यता को महसूस करने लगे और यहाँ दर्शन के लिए आने लगे।<br><br>
+
+उन्नीसवीं और बीसवीं शताब्दी में भी यह परंपरा निर्बाध रूप से चलती रही। श्रद्धा और विश्वास की यह लौ बुझने के बजाय और अधिक प्रज्वलित होती गई। लोग यहाँ मन्नत माँगने आते और उनकी मनोकामनाएँ पूरी होने लगीं।<br><br>
+
+और फिर आया वर्ष 2025 — एक ऐतिहासिक क्षण! जोशी परिवार की वर्तमान पीढ़ी ने यह निर्णय लिया कि इस दिव्य शिला को अब एक भव्य स्वरूप दिया जाए। वर्षों की आस्था और श्रद्धा को मूर्त रूप देने के लिए एक विशाल मूर्ति का निर्माण किया गया। जब यह मूर्ति स्थापित हुई, तो पूरा गाँव भक्ति में सराबोर हो उठा। उस दिन ऐसा लगा मानो श्रीश्याम स्वयं अपनी मूर्ति में प्रकट होकर भक्तों को दर्शन दे रहे हों।<br><br>
+
+अब यह स्थान सिर्फ जोशी परिवार का नहीं, बल्कि पूरे गाँव और आस-पास के श्रद्धालुओं का पूज्य स्थल बन चुका था। हर रोज यहाँ भजन-कीर्तन होते, भक्तों की भीड़ उमड़ती, और श्रीश्याम के जयकारों से आकाश गूंज उठता।<br><br>
+
+एक साधारण पत्थर से लेकर एक विशाल मूर्ति तक की यह यात्रा न केवल जोशी परिवार की आस्था का प्रमाण थी, बल्कि यह दर्शाती थी कि सच्ची श्रद्धा समय के साथ और अधिक दिव्य होती जाती है।<br><br>
+
+<b>श्रीश्याम की जय !</b>
+</p>
+
+<p>
+<a href="https://youtube.com/@shrishyammandirjaleudham" target="_blank">YouTube</a> |
+<a href="https://www.instagram.com/shree_shyam_mandir_jaleu_dham" target="_blank">Instagram</a>
+</p>
+
+<p><b>This Website designed and maintained by Saurabh Pareek</b></p>
+
+</div>
+
+<!-- Shringar -->
+<div class="section">
+<h2>आज का श्रृंगार</h2>
+<div class="photo-box">
+<img id="main-photo" alt="Today's Shringar">
+<div class="overlay" id="main-date"></div>
+</div>
+<div id="main-caption"></div>
+<div id="visitor-counter"></div>
+</div>
+
+<!-- Gallery -->
+<div class="section" id="gallery">
+<h2>श्रृंगार</h2>
+<div class="gallery" id="gallery"></div>
+</div>
+
+<!-- Lightbox -->
+<div id="lightbox" onclick="closeLightbox()">
+<img id="lightbox-img" alt="Enlarged Shringar">
+</div>
+
+<!-- Visitor Popup -->
+<div id="visitor-popup">
+<img src="shyam_icon.png" alt="Shyam Baba" style="width:30px; height:30px; border-radius:50%;">
+<span>जय श्री श्याम ❤️</span>
+</div>
+
+<footer>
+Jai Shree Shyam ❤️
+</footer>
+
+<script>
+// Dark mode toggle
+function toggleMode(){
+  document.body.classList.toggle("dark");
+  document.querySelector(".toggle-btn").innerText = document.body.classList.contains("dark") ? "☀️ Day" : "🌙 Night";
+}
+
+// 🌸 Flowers
+let flowerInterval=500, flowerTimer;
+function createFlower(){
+  const f=document.createElement("div");
+  f.classList.add("flower");
+  f.innerHTML="🌸";
+  f.style.left=Math.random()*100+"vw";
+  f.style.animationDuration=(3+Math.random()*5)+"s";
+  document.body.appendChild(f);
+  setTimeout(()=>f.remove(),8000);
+}
+function startFlowers(interval){
+  if(flowerTimer) clearInterval(flowerTimer);
+  flowerTimer=setInterval(createFlower,interval);
+}
+startFlowers(flowerInterval);
+
+// Format photo date
+function formatDate(file){
+  let p=file.split(".")[0].split("-");
+  let d=new Date(p[0],p[1]-1,p[2]);
+  return d.toLocaleDateString("hi-IN",{day:"2-digit",month:"long",year:"numeric"});
+}
+
+// Load photos
+fetch("photos.json").then(res=>res.json()).then(data=>{
+  data.sort();
+  let latest=data[data.length-1];
+  document.getElementById("main-photo").src="photos/"+latest;
+  document.getElementById("main-date").innerText=formatDate(latest)+" | श्रृंगार";
+  document.getElementById("main-caption").innerHTML=`श्री श्याम मंदिर जालेऊ धाम<br>${formatDate(latest)} | श्रृंगार दर्शन`;
+
+  const mainPhoto=document.getElementById("main-photo");
+  mainPhoto.onclick=()=>openLightbox(mainPhoto.src);
+
+  let gallery=document.getElementById("gallery");
+  data.slice(0,data.length-1).forEach(photo=>{
+    let card=document.createElement("div"); card.className="gallery-card";
+    let img=document.createElement("img"); img.src="photos/"+photo;
+    img.alt="Shringar "+formatDate(photo);
+    img.onload=()=> img.parentElement.classList.add("show");
+    img.onclick=()=> openLightbox(img.src);
+    let caption=document.createElement("p"); caption.innerText=formatDate(photo);
+    card.appendChild(img); card.appendChild(caption);
+    gallery.appendChild(card);
+  });
+});
+
+// Lightbox
+function openLightbox(photoSrc){
+  const lb=document.getElementById("lightbox");
+  const lbImg=document.getElementById("lightbox-img");
+  lbImg.src=photoSrc;
+  let oldCaption=document.getElementById("lightbox-caption");
+  if(oldCaption) oldCaption.remove();
+  const lbCaption=document.createElement("p"); lbCaption.id="lightbox-caption";
+  if(photoSrc.includes("photos/")) lbCaption.innerText=formatDate(photoSrc.split("/").pop());
+  lb.appendChild(lbCaption);
+  lb.classList.add("show");
+  startFlowers(1200); // slow flowers
+}
+function closeLightbox(){
+  const lb=document.getElementById("lightbox");
+  lb.classList.remove("show");
+  setTimeout(()=> startFlowers(flowerInterval),400);
+  let oldCaption=document.getElementById("lightbox-caption");
+  if(oldCaption) oldCaption.remove();
+}
+
+// Visitor Counter
+const counterDiv=document.getElementById("visitor-counter");
+let visitorCount=localStorage.getItem("visitorCount");
+if(!visitorCount) visitorCount=0;
+visitorCount=parseInt(visitorCount)+1;
+localStorage.setItem("visitorCount",visitorCount);
+counterDiv.innerText=`Visitors: ${visitorCount}`;
+
+// Visitor popup
+const popup=document.getElementById("visitor-popup");
+function showVisitorPopup(){
+  popup.classList.add("show");
+  setTimeout(()=>{ popup.classList.remove("show"); popup.style.opacity=0; },3500);
+}
+window.addEventListener("load",showVisitorPopup);
+</script>
+</body>
+</html>
